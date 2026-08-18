@@ -43,7 +43,7 @@ function SnippetForm() {
         setIsFetching(true);
         setError('');
         try {
-          const response = await axios.get(`https://r2c-2z91.onrender.com/api/snippets/${id}`, {
+          const response = await axios.get(`/api/snippets/${id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           });
           setFormData({
@@ -89,9 +89,9 @@ function SnippetForm() {
     try {
       const config = { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } };
       if (id) {
-        await axios.put(`https://r2c-2z91.onrender.com/api/snippets/${id}`, data, config);
+        await axios.put(`/api/snippets/${id}`, data, config);
       } else {
-        await axios.post('https://r2c-2z91.onrender.com/api/snippets', data, config);
+        await axios.post('/api/snippets', data, config);
       }
       navigate('/mysnippet', { state: { fromEdit: true } });
     } catch (err) {
@@ -114,11 +114,11 @@ function SnippetForm() {
 
   return (
     <div className={`min-h-screen flex items-center justify-center px-4 py-8 transition-colors duration-500 animate-fade-in-up ${
-      isDark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
+      isDark ? 'bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
     }`}>
       <div className={`w-full max-w-2xl p-8 rounded-2xl shadow-2xl transition-all duration-500 animate-slide-in-up ${
-        isDark ? 'bg-gray-900 border border-gray-700' : 'bg-white/90 border border-gray-200'
-      } backdrop-blur-lg`}>
+        isDark ? 'bg-[#0f1626]/80 border border-[#1e2942]/60 backdrop-blur-lg' : 'bg-white/90 border border-gray-200 backdrop-blur-lg'
+      }`}>
         {/* Back Button */}
         <button
           onClick={() => navigate('/mysnippet')}
@@ -293,7 +293,7 @@ function SnippetForm() {
                 <label className={`block text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} transition-colors duration-300`}>
                   <Code2 size={16} className="inline mr-2" />Code *
                 </label>
-                <div className={`rounded-lg border overflow-hidden ${isDark ? 'border-gray-600' : 'border-gray-300'} transition-all duration-300`}>
+                <div className={`rounded-lg border overflow-hidden ${isDark ? 'border-[#1e2942]/60' : 'border-gray-300'} transition-all duration-300`}>
                   <textarea
                     name="code"
                     value={formData.code}
@@ -315,7 +315,7 @@ function SnippetForm() {
                   type="button"
                   onClick={() => navigate('/mysnippet')}
                   className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
-                    isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800 border border-gray-600' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-gray-300'
+                    isDark ? 'text-slate-400 hover:text-white hover:bg-[#131b2e] border border-[#1e2942]/60' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-gray-300'
                   }`}
                 >Cancel</button>
                 <button

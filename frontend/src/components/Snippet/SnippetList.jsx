@@ -38,7 +38,7 @@ function SnippetList() {
     setIsLoading(true);
     setError('');
     try {
-      const response = await axios.get('https://r2c-2z91.onrender.com/api/snippets/my-snippets', {
+      const response = await axios.get('/api/snippets/my-snippets', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setSnippets(response.data);
@@ -63,7 +63,7 @@ function SnippetList() {
     setIsLoading(true);
     setError('');
     try {
-      const response = await axios.get('https://r2c-2z91.onrender.com/api/snippets/search', {
+      const response = await axios.get('/api/snippets/search', {
         params: { tags: searchQuery.trim() },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -95,7 +95,7 @@ function SnippetList() {
     if (!snippet) return;
 
     try {
-      await axios.delete(`https://r2c-2z91.onrender.com/api/snippets/${snippet._id}`, {
+      await axios.delete(`/api/snippets/${snippet._id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       const updatedSnippets = snippets.filter((s) => s._id !== snippet._id);
@@ -124,7 +124,7 @@ function SnippetList() {
       css: isDark ? 'bg-blue-900/30 text-blue-400 border-blue-600/30' : 'bg-blue-100 text-blue-800 border-blue-200',
       html: isDark ? 'bg-orange-900/30 text-orange-400 border-orange-600/30' : 'bg-orange-100 text-orange-800 border-orange-200',
       react: isDark ? 'bg-cyan-900/30 text-cyan-400 border-cyan-600/30' : 'bg-cyan-100 text-cyan-800 border-cyan-200',
-      default: isDark ? 'bg-gray-900/30 text-gray-400 border-gray-600/30' : 'bg-gray-100 text-gray-700 border-gray-200',
+      default: isDark ? 'bg-[#1e2942]/60 text-slate-400 border-[#1e2942]/60' : 'bg-gray-100 text-gray-700 border-gray-200',
     };
     return colors[language?.toLowerCase()] || colors.default;
   };
@@ -147,7 +147,7 @@ function SnippetList() {
         
         {/* Modal */}
         <div className={`relative w-full max-w-md p-6 rounded-2xl shadow-2xl transition-all duration-300 transform ${
-          isDark ? 'bg-gray-900 border border-gray-700' : 'bg-white border border-gray-200'
+          isDark ? 'bg-[#0f1626]/80 border border-[#1e2942]/60 backdrop-blur-lg' : 'bg-white border border-gray-200'
         }`}>
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
@@ -175,7 +175,7 @@ function SnippetList() {
               Are you sure you want to delete this snippet? This action cannot be undone.
             </p>
             <div className={`p-3 rounded-lg border ${
-              isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-gray-50 border-gray-200'
+              isDark ? 'bg-[#131b2e]/50 border-[#1e2942]/60' : 'bg-gray-50 border-gray-200'
             }`}>
               <p className={`font-medium text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 "{deleteModal.snippet?.title}"
@@ -192,7 +192,7 @@ function SnippetList() {
               onClick={closeDeleteModal}
               className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-200 ${
                 isDark 
-                  ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-600' 
+                  ? 'bg-[#131b2e] text-slate-400 hover:bg-[#131b2e]/80 border border-[#1e2942]/60' 
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
               }`}
             >
@@ -212,11 +212,11 @@ function SnippetList() {
 
   return (
     <div className={`min-h-screen flex items-center justify-center px-4 py-8 transition-colors duration-500 animate-fade-in-up ${
-      isDark ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
+      isDark ? 'bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
     }`}>
       <div className={`w-full max-w-7xl p-8 rounded-2xl shadow-2xl transition-all duration-500 animate-slide-in-up ${
-        isDark ? 'bg-gray-900 border border-gray-700' : 'bg-white/90 border border-gray-200'
-      } backdrop-blur-lg relative`}>
+        isDark ? 'bg-[#0f1626]/80 border border-[#1e2942]/60 backdrop-blur-lg' : 'bg-white/90 border border-gray-200 backdrop-blur-lg'
+      } relative`}>
         {/* Header */}
         <div className="text-center mb-8 animate-pulse-short">
           <div className={`inline-flex p-3 rounded-xl mb-4 ${isDark ? 'bg-gradient-to-r from-orange-500 to-amber-500' : 'bg-gradient-to-r from-orange-600 to-amber-600'} transition-transform duration-300 hover:scale-110`}>
@@ -242,7 +242,7 @@ function SnippetList() {
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     placeholder="Search by tag..."
                     className={`w-full pl-10 pr-10 py-2 rounded-lg border transition-all duration-300 ${
-                      isDark ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-orange-500'
+                      isDark ? 'bg-[#131b2e] border-[#1e2942]/60 text-white placeholder-slate-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-orange-500'
                     }`}
                   />
                   <button
@@ -255,7 +255,7 @@ function SnippetList() {
                 {searchMode && (
                   <button
                     onClick={resetSearch}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${isDark ? 'text-gray-300 hover:text-white bg-gray-800 border border-gray-600' : 'text-gray-600 hover:text-gray-900 bg-gray-100 border border-gray-300'}`}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${isDark ? 'text-slate-400 hover:text-white bg-[#131b2e] border border-[#1e2942]/60' : 'text-gray-600 hover:text-gray-900 bg-gray-100 border border-gray-300'}`}
                   >
                     <X size={16} />
                   </button>
@@ -290,11 +290,11 @@ function SnippetList() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSnippets.length > 0 ? (
               filteredSnippets.map((snippet) => (
-                <div key={snippet._id} className={`group relative rounded-2xl shadow-xl transition-all duration-500 transform hover:scale-105 animate-fade-in-up ${isDark ? 'bg-gray-900 border border-gray-700 hover:border-orange-500/50' : 'bg-white/90 border border-gray-200 hover:border-orange-400/50'} backdrop-blur-lg`}>
-                  <div className={`p-6 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'} transition-colors duration-300`}>
+                <div key={snippet._id} className={`group relative rounded-2xl shadow-xl transition-all duration-500 transform hover:scale-105 animate-fade-in-up ${isDark ? 'bg-[#0f1626]/80 border border-[#1e2942]/60 hover:border-orange-500/50' : 'bg-white/90 border border-gray-200 hover:border-orange-400/50'} backdrop-blur-lg`}>
+                  <div className={`p-6 border-b ${isDark ? 'border-[#1e2942]/60' : 'border-gray-200'} transition-colors duration-300`}>
                     <div className="flex items-start justify-between mb-4">
                       <h3 className={`text-lg font-bold line-clamp-2 pr-2 ${isDark ? 'text-white' : 'text-gray-900'} transition-colors duration-300`}>{snippet.title}</h3>
-                      <div className={`flex items-center px-3 py-1 rounded-full text-xs font-medium border ${snippet.isPublic ? isDark ? 'bg-green-900/30 text-green-400 border-green-600/30' : 'bg-green-100 text-green-800 border-green-200' : isDark ? 'bg-gray-900/30 text-gray-400 border-gray-600/30' : 'bg-gray-100 text-gray-700 border-gray-200'} transition-colors duration-300`}>
+                      <div className={`flex items-center px-3 py-1 rounded-full text-xs font-medium border ${snippet.isPublic ? isDark ? 'bg-green-900/30 text-green-400 border-green-600/30' : 'bg-green-100 text-green-800 border-green-200' : isDark ? 'bg-[#131b2e]/50 text-slate-400 border-[#1e2942]/60' : 'bg-gray-100 text-gray-700 border-gray-200'} transition-colors duration-300`}>
                         {snippet.isPublic ? (<><Globe size={12} className="mr-1" />Public</>) : (<><Lock size={12} className="mr-1" />Private</>)}
                       </div>
                     </div>
@@ -307,7 +307,7 @@ function SnippetList() {
                         <span key={index} className={`px-3 py-1 rounded-full text-xs font-medium ${isDark ? 'bg-orange-900/30 text-orange-400 border-orange-600/30' : 'bg-orange-100 text-orange-700 border-orange-200'} transition-colors duration-300`}>#{tag}</span>
                       ))}
                       {snippet.tags.length > 3 && (
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${isDark ? 'bg-gray-900/30 text-gray-400 border-gray-600/30' : 'bg-gray-100 text-gray-600 border-gray-200'} transition-colors duration-300`}>+{snippet.tags.length - 3}</span>
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${isDark ? 'bg-[#131b2e]/50 text-slate-400 border-[#1e2942]/60' : 'bg-gray-100 text-gray-600 border-gray-200'} transition-colors duration-300`}>+{snippet.tags.length - 3}</span>
                       )}
                     </div>
                     <div className={`flex items-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'} transition-colors duration-300`}><Calendar size={12} className="mr-2" />{formatDate(snippet.createdAt)}</div>

@@ -19,7 +19,7 @@ function Collection() {
     const fetchAllSnippets = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get('https://r2c-2z91.onrender.com/api/snippets');
+        const response = await axios.get('/api/snippets');
         setSnippets(response.data);
         setError('');
       } catch (err) {
@@ -47,7 +47,7 @@ function Collection() {
     }
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://r2c-2z91.onrender.com/api/snippets/search2?tags=${encodeURIComponent(cleanedTags)}`);
+      const response = await axios.get(`/api/snippets/search2?tags=${encodeURIComponent(cleanedTags)}`);
       setSnippets(response.data);
       setError('');
     } catch (err) {
@@ -153,8 +153,8 @@ function Collection() {
         ...vscDarkPlus,
         'pre[class*="language-"]': {
           ...vscDarkPlus['pre[class*="language-"]'],
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-          border: '1px solid #334155',
+background: 'linear-gradient(135deg, #060913 0%, #0f1626 100%)',
+           border: '1px solid #1e2942',
           borderRadius: '16px',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
         },
@@ -178,12 +178,12 @@ function Collection() {
   };
 
   const bgClass = isDark
-    ? 'min-h-screen transition-all duration-500 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800'
+    ? 'min-h-screen transition-all duration-500 bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]'
     : 'min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50';
   const textPrimary = isDark ? 'text-white' : 'text-gray-800';
-  const textSecondary = isDark ? 'text-gray-400' : 'text-gray-600';
-  const cardBg = isDark ? 'bg-gray-800/50' : 'bg-white';
-  const cardBorder = isDark ? 'border-gray-700' : 'border-orange-100';
+  const textSecondary = isDark ? 'text-slate-400' : 'text-gray-600';
+  const cardBg = isDark ? 'bg-[#0f1626]/80 backdrop-blur-md' : 'bg-white';
+  const cardBorder = isDark ? 'border-[#1e2942]/60' : 'border-orange-100';
 
   return (
     <div className={bgClass}>
@@ -233,7 +233,7 @@ function Collection() {
       </header>
 
       {/* Snippets Section */}
-      <section className={`py-16 ${isDark ? 'bg-gray-800/30' : 'bg-white/50'} backdrop-blur-sm`}>
+      <section className={`py-16 ${isDark ? 'bg-[#0f1626]/30' : 'bg-white/50'} backdrop-blur-sm`}>
         <div className="max-w-6xl mx-auto px-6">
           {isLoading ? (
             <div className="flex justify-center items-center py-16">
@@ -275,7 +275,7 @@ function Collection() {
 
                     <h3 className={`text-xl font-bold ${textPrimary} mb-3 pr-16`}>{snippet.title}</h3>
 
-                    <div className={`${isDark ? 'bg-gray-700/50' : 'bg-gray-50'} rounded-2xl p-4 mb-4`}>
+                    <div className={`${isDark ? 'bg-[#131b2e]/50' : 'bg-gray-50'} rounded-2xl p-4 mb-4`}>
                       <p className={`${textSecondary} text-sm line-clamp-3`}>{snippet.description || 'No description'}</p>
                     </div>
 
@@ -338,14 +338,14 @@ function Collection() {
                 <p className={`${textSecondary} leading-relaxed`}>{selectedSnippet.description || 'No description'}</p>
               </div>
 
-              <div className={`${isDark ? 'bg-orange-900/20' : 'bg-orange-50'} rounded-2xl p-6 mb-6`}>
+              <div className={`${isDark ? 'bg-[#131b2e]/50' : 'bg-orange-50'} rounded-2xl p-6 mb-6`}>
                 <h3 className={`text-lg font-semibold ${textPrimary} mb-3`}>Tags</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedSnippet.tags.map((tag, index) => (
                     <span
                       key={index}
                       className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        isDark ? 'bg-orange-800/50 text-orange-300 border border-orange-700' : 'bg-orange-200 text-orange-800 border border-orange-300'
+                        isDark ? 'bg-[#1e2942]/60 text-orange-300 border border-[#1e2942]/60' : 'bg-orange-200 text-orange-800 border border-orange-300'
                       }`}
                     >
                       #{tag}
@@ -415,8 +415,8 @@ function Collection() {
                       overflow: 'auto',
                       position: 'relative',
                       ...(isDark ? {
-                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-                        border: '1px solid #334155',
+                        background: 'linear-gradient(135deg, #060913 0%, #0f1626 100%)',
+                        border: '1px solid #1e2942',
                         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
                       } : {
                         background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
@@ -441,7 +441,7 @@ function Collection() {
                   {/* Decorative gradient overlay */}
                   <div className={`absolute inset-0 rounded-16px pointer-events-none ${
                     isDark 
-                      ? 'bg-gradient-to-r from-slate-500/5 via-transparent to-blue-500/5'
+                      ? 'bg-gradient-to-r from-orange-500/5 via-transparent to-amber-500/5'
                       : 'bg-gradient-to-r from-slate-100/20 via-transparent to-blue-100/20'
                   }`} />
                 </div>

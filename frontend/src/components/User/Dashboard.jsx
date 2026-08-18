@@ -16,13 +16,13 @@ function Dashboard() {
   const [error, setError] = useState('');
 
   const backgroundClasses = `min-h-screen transition-all duration-500 ${
-    isDark ? 'bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
+    isDark ? 'bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
   }`;
   const cardClasses = `p-6 rounded-2xl border ${
-    isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-gray-200'
+    isDark ? 'bg-[#0f1626]/80 border-[#1e2942]/60' : 'bg-white/70 border-gray-200'
   } backdrop-blur-sm`;
   const hoverCardClasses = `p-6 rounded-2xl border transition-all duration-300 hover:scale-105 ${
-    isDark ? 'bg-gray-800/50 border-gray-700 hover:bg-gray-800' : 'bg-white/70 border-gray-200 hover:bg-white'
+    isDark ? 'bg-[#0f1626]/80 border-[#1e2942]/60 hover:bg-[#131b2e]/80' : 'bg-white/70 border-gray-200 hover:bg-white'
   } backdrop-blur-sm`;
 
   useEffect(() => {
@@ -37,8 +37,8 @@ function Dashboard() {
         const token = localStorage.getItem('token');
         const config = { headers: { Authorization: `Bearer ${token}` } };
         const [userResponse, snippetsResponse] = await Promise.all([
-          axios.get('https://r2c-2z91.onrender.com/api/user/dashboard', config),
-          axios.get('https://r2c-2z91.onrender.com/api/snippets/my-snippets', config),
+          axios.get('/api/user/dashboard', config),
+          axios.get('/api/snippets/my-snippets', config),
         ]);
         setDashboardData({ user: userResponse.data.user, snippets: snippetsResponse.data });
       } catch (err) {
@@ -57,7 +57,7 @@ function Dashboard() {
       java: isDark ? 'bg-red-900/30 text-red-400 border-red-600/30' : 'bg-red-100 text-red-800 border-red-200',
       css: isDark ? 'bg-green-900/30 text-green-400 border-green-600/30' : 'bg-green-100 text-green-800 border-green-200',
       html: isDark ? 'bg-orange-900/30 text-orange-400 border-orange-600/30' : 'bg-orange-100 text-orange-800 border-orange-200',
-      default: isDark ? 'bg-gray-900/30 text-gray-400 border-gray-600/30' : 'bg-gray-100 text-gray-700 border-gray-200',
+      default: isDark ? 'bg-[#1e2942]/60 text-slate-400 border-[#1e2942]/60' : 'bg-gray-100 text-gray-700 border-gray-200',
     };
     return colors[language?.toLowerCase()] || colors.default;
   };
@@ -75,14 +75,45 @@ function Dashboard() {
     acc[s.language] = (acc[s.language] || 0) + 1;
     return acc;
   }, {});
-  const languageChartData = {
-    labels: Object.keys(languageCounts).map((lang) => lang.charAt(0).toUpperCase() + lang.slice(1)),
-    datasets: [{
-      data: Object.values(languageCounts),
-      backgroundColor: ['#FBBF24', '#3B82F6', '#EF4444', '#10B981', '#F97316'],
-      borderColor: isDark ? '#1F2937' : '#F3F4F6',
-      borderWidth: 2,
-    }],
+  const getStatColors = (color) => {
+    const mappings = {
+      blue: {
+        bg: isDark ? 'bg-blue-900/30' : 'bg-blue-100',
+        text: isDark ? 'text-blue-400' : 'text-blue-600',
+      },
+      green: {
+        bg: isDark ? 'bg-green-900/30' : 'bg-green-100',
+        text: isDark ? 'text-green-400' : 'text-green-600',
+      },
+      red: {
+        bg: isDark ? 'bg-red-900/30' : 'bg-red-100',
+        text: isDark ? 'text-red-400' : 'text-red-600',
+      },
+      purple: {
+        bg: isDark ? 'bg-purple-900/30' : 'bg-purple-100',
+        text: isDark ? 'text-purple-400' : 'text-purple-600',
+      },
+    };
+    return mappings[color] || mappings.blue;
+  };
+
+  const languageColorMap = {
+    javascript: '#FBBF24',
+    python: '#3B82F6',
+    java: '#EF4444',
+    typescript: '#60A5FA',
+    go: '#06B6D4',
+    rust: '#F97316',
+    cpp: '#8B5CF6',
+    csharp: '#10B981',
+    php: '#6366F1',
+    ruby: '#DC2626',
+    swift: '#F05138',
+    kotlin: '#7F52FF',
+    html: '#E34F26',
+    css: '#1572B6',
+    sql: '#00758F',
+    default: '#6B7280',
   };
 
   const recentActivity = snippets.slice(0, 4).map((snippet, index) => ({
@@ -128,8 +159,8 @@ function Dashboard() {
                   <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</p>
                   <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{stat.value}</p>
                 </div>
-                <div className={`p-3 rounded-xl ${isDark ? `bg-${stat.color}-900/30` : `bg-${stat.color}-100`}`}>
-                  <stat.icon size={24} className={isDark ? `text-${stat.color}-400` : `text-${stat.color}-600`} />
+                <div className={`p-3 rounded-xl ${getStatColors(stat.color).bg}`}>
+                  <stat.icon size={24} className={getStatColors(stat.color).text} />
                 </div>
               </div>
             </div>
@@ -177,7 +208,7 @@ function Dashboard() {
                     key={snippet._id}
                     className={`p-4 rounded-xl border transition-all duration-200 hover:scale-[1.02] ${
                       isDark 
-                        ? 'bg-gray-700/50 border-gray-600 hover:bg-gray-700' 
+                        ? 'bg-[#131b2e]/50 border-[#1e2942]/60 hover:bg-[#131b2e]/80' 
                         : 'bg-gray-50 border-gray-200 hover:bg-white'
                     }`}
                   >
@@ -193,7 +224,7 @@ function Dashboard() {
                       <div className={`ml-4 px-2 py-1 rounded-full text-xs font-medium border flex items-center space-x-1 ${
                         snippet.isPublic 
                           ? isDark ? 'bg-green-900/30 text-green-400 border-green-600/30' : 'bg-green-100 text-green-800 border-green-200'
-                          : isDark ? 'bg-gray-900/30 text-gray-400 border-gray-600/30' : 'bg-gray-100 text-gray-700 border-gray-200'
+                          : isDark ? 'bg-[#131b2e]/50 text-slate-400 border-[#1e2942]/60' : 'bg-gray-100 text-gray-700 border-gray-200'
                       }`}>
                         {snippet.isPublic ? <Globe size={10} /> : <Lock size={10} />}
                         <span>{snippet.isPublic ? 'Public' : 'Private'}</span>
@@ -278,27 +309,46 @@ function Dashboard() {
             <div className={`${cardClasses} animate-fade-in-up`}>
               <h3 className={`text-lg font-semibold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>Language Usage</h3>
               {Object.keys(languageCounts).length > 0 ? (
-                <div data-chart="pie" data-chart-options={JSON.stringify({
-                  type: 'pie',
-                  data: languageChartData,
-                  options: {
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'bottom',
-                        labels: {
-                          color: isDark ? '#D1D5DB' : '#374151',
-                          font: { size: 12 }
-                        }
-                      },
-                      tooltip: {
-                        backgroundColor: isDark ? '#1F2937' : '#FFFFFF',
-                        titleColor: isDark ? '#FFFFFF' : '#111827',
-                        bodyColor: isDark ? '#D1D5DB' : '#374151'
-                      }
-                    }
-                  }
-                })} />
+                <div className="space-y-4">
+                  {/* Stacked bar chart */}
+                  <div className={`h-4 w-full rounded-full overflow-hidden flex ${isDark ? 'bg-[#1e2942]/60' : 'bg-gray-200'}`}>
+                    {Object.entries(languageCounts).map(([lang, count]) => {
+                      const percentage = ((count / totalSnippets) * 100).toFixed(1);
+                      const color = languageColorMap[lang.toLowerCase()] || languageColorMap.default;
+                      return (
+                        <div
+                          key={lang}
+                          style={{ width: `${percentage}%`, backgroundColor: color }}
+                          className="h-full transition-all duration-300 first:rounded-l-full last:rounded-r-full"
+                          title={`${lang}: ${count} (${percentage}%)`}
+                        />
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Language details list */}
+                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    {Object.entries(languageCounts)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([lang, count]) => {
+                        const percentage = ((count / totalSnippets) * 100).toFixed(1);
+                        const color = languageColorMap[lang.toLowerCase()] || languageColorMap.default;
+                        return (
+                          <div key={lang} className="flex items-center justify-between text-sm">
+                            <div className="flex items-center space-x-2">
+                              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+                              <span className={`font-medium ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+                                {lang}
+                              </span>
+                            </div>
+                            <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                              <span className="font-semibold">{count}</span> {count === 1 ? 'snippet' : 'snippets'} ({percentage}%)
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
               ) : (
                 <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>No language data available</p>
               )}

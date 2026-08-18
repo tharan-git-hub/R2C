@@ -29,10 +29,10 @@ function Profile() {
   const [activeTab, setActiveTab] = useState('profile');
 
   const backgroundClasses = `min-h-screen transition-all duration-500 ${
-    isDark ? 'bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
+    isDark ? 'bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]' : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
   }`;
   const cardClasses = `p-6 rounded-2xl border ${
-    isDark ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-gray-200'
+    isDark ? 'bg-[#0f1626]/80 border-[#1e2942]/60' : 'bg-white/70 border-gray-200'
   } backdrop-blur-sm`;
 
   useEffect(() => {
@@ -44,10 +44,10 @@ function Profile() {
       setIsLoading(true);
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('https://r2c-2z91.onrender.com/api/user/dashboard', {
+        const response = await axios.get('/api/user/dashboard', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const { name, favoriteLanguage, bio, location, website, github, twitter, linkedin } = response.data.user.profile;
+        const { name, favoriteLanguage, bio, location, website, github, twitter, linkedin } = response.data.user.profile || {};
         setFormData({
           name: name || '',
           favoriteLanguage: favoriteLanguage || '',
@@ -95,7 +95,7 @@ function Profile() {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.put('https://r2c-2z91.onrender.com/api/user/profile', { profile: formData }, {
+      await axios.put('/api/user/profile', { profile: formData }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSuccess('Profile updated successfully!');
@@ -131,7 +131,7 @@ function Profile() {
   return (
     <div className={backgroundClasses}>
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className={`mb-8 p-1 rounded-2xl ${isDark ? 'bg-gray-800/50' : 'bg-white/50'} backdrop-blur-sm border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+        <div className={`mb-8 p-1 rounded-2xl ${isDark ? 'bg-[#0f1626]/50' : 'bg-white/50'} backdrop-blur-sm border ${isDark ? 'border-[#1e2942]/60' : 'border-gray-200'}`}>
           <div className="flex space-x-1">
             {[
               { id: 'profile', label: 'Profile', icon: User2 },
@@ -198,7 +198,7 @@ function Profile() {
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', e.target.value)}
                         placeholder="Enter your full name"
-                        className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 ${isDark ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors.name ? 'border-red-500' : ''}`}
+                        className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 ${isDark ? 'bg-[#131b2e] border-[#1e2942]/60 text-white placeholder-slate-500 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors.name ? 'border-red-500' : ''}`}
                       />
                       {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
@@ -208,7 +208,7 @@ function Profile() {
                         type="email"
                         value={formData.email}
                         disabled
-                        className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 bg-gray-200 cursor-not-allowed ${isDark ? 'bg-gray-700 border-gray-600 text-gray-400' : 'bg-gray-100 border-gray-300 text-gray-600'}`}
+                        className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 bg-gray-200 cursor-not-allowed ${isDark ? 'bg-[#131b2e] border-[#1e2942]/60 text-slate-400' : 'bg-gray-100 border-gray-300 text-gray-600'}`}
                       />
                     </div>
                     <div>
@@ -231,7 +231,7 @@ function Profile() {
                         value={formData.location}
                         onChange={(e) => handleInputChange('location', e.target.value)}
                         placeholder="City, Country"
-                        className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 ${isDark ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors.location ? 'border-red-500' : ''}`}
+                        className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 ${isDark ? 'bg-[#131b2e] border-[#1e2942]/60 text-white placeholder-slate-500 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors.location ? 'border-red-500' : ''}`}
                       />
                       {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
                     </div>
@@ -243,7 +243,7 @@ function Profile() {
                       onChange={(e) => handleInputChange('bio', e.target.value)}
                       placeholder="Tell us about yourself..."
                       rows={4}
-                      className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 resize-none ${isDark ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors.bio ? 'border-red-500' : ''}`}
+                      className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 resize-none ${isDark ? 'bg-[#131b2e] border-[#1e2942]/60 text-white placeholder-slate-500 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors.bio ? 'border-red-500' : ''}`}
                     />
                     <p className={`text-xs mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{formData.bio.length}/500 characters</p>
                     {errors.bio && <p className="text-red-500 text-xs mt-1">{errors.bio}</p>}
@@ -261,7 +261,7 @@ function Profile() {
                       { icon: Linkedin, label: 'LinkedIn', field: 'linkedin', placeholder: 'linkedin-profile' }
                     ].map((social) => (
                       <div key={social.label} className="flex items-center space-x-4">
-                        <div className={`p-3 rounded-xl ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                        <div className={`p-3 rounded-xl ${isDark ? 'bg-[#131b2e]' : 'bg-gray-100'}`}>
                           <social.icon size={20} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
                         </div>
                         <div className="flex-1">
@@ -271,7 +271,7 @@ function Profile() {
                             value={formData[social.field]}
                             onChange={(e) => handleInputChange(social.field, e.target.value)}
                             placeholder={social.placeholder}
-                            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 ${isDark ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors[social.field] ? 'border-red-500' : ''}`}
+                            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 focus:ring-2 focus:ring-offset-2 ${isDark ? 'bg-[#131b2e] border-[#1e2942]/60 text-white placeholder-slate-500 focus:ring-orange-500 focus:border-orange-500' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-orange-600 focus:border-orange-600'} ${errors[social.field] ? 'border-red-500' : ''}`}
                           />
                           {errors[social.field] && <p className="text-red-500 text-xs mt-1">{errors[social.field]}</p>}
                         </div>

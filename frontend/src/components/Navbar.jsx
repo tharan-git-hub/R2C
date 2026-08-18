@@ -49,7 +49,7 @@ function Navbar() {
   return (
     <nav className={`sticky top-0 z-50 transition-all duration-300 ${
       isDark 
-        ? 'bg-gray-900/95 border-gray-700/50' 
+        ? 'bg-[#060913]/95 border-[#1e2942]/50' 
         : 'bg-white/95 border-gray-200/50'
     } backdrop-blur-lg border-b shadow-sm`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -202,7 +202,7 @@ function Navbar() {
             : 'max-h-0 opacity-0 overflow-hidden'
         }`}>
           <div className={`pt-4 border-t ${
-            isDark ? 'border-gray-700/50' : 'border-gray-200/50'
+            isDark ? 'border-[#1e2942]/50' : 'border-gray-200/50'
           }`}>
             <div className="space-y-1">
               {navLinks.map((link) => (
@@ -252,7 +252,7 @@ function Navbar() {
 
               {/* Mobile Auth Section */}
               <div className={`pt-3 mt-3 border-t ${
-                isDark ? 'border-gray-700/50' : 'border-gray-200/50'
+                isDark ? 'border-[#1e2942]/50' : 'border-gray-200/50'
               }`}>
                 {isAuthenticated ? (
                   <button

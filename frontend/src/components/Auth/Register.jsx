@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { User, Mail, Lock, Eye, EyeOff, UserPlus, AlertCircle, CheckCircle } from 'lucide-react';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { useTheme } from '../../Theme/ThemeContext.jsx';
 
 function Register() {
   const { isDark } = useTheme();
-  const { login } = useContext(AuthContext);
+  const { login, isAuthenticated } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,6 +18,12 @@ function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
 
   const validatePassword = (pass) => {
     const checks = {
@@ -49,7 +55,7 @@ function Register() {
     setError('');
     
     try {
-      const response = await axios.post('https://r2c-2z91.onrender.com/api/auth/register', {
+      const response = await axios.post('/api/auth/register', {
         username,
         email,
         password
@@ -76,14 +82,14 @@ function Register() {
   return (
     <div className={`min-h-screen flex items-center justify-center px-4 py-8 transition-colors duration-500 animate-fade-in-up ${
       isDark
-        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700'
+        ? 'bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]'
         : 'bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100'
     }`}>
       <div className={`w-full max-w-md p-8 rounded-2xl shadow-2xl transition-all duration-500 animate-slide-in-up ${
         isDark
-          ? 'bg-gray-900 border border-gray-700'
-          : 'bg-white/90 border border-gray-200'
-      } backdrop-blur-lg`}>
+          ? 'bg-[#0f1626]/80 border border-[#1e2942]/60 backdrop-blur-lg'
+          : 'bg-white/90 border border-gray-200 backdrop-blur-lg'
+      }`}>
         {/* Header */}
         <div className="text-center mb-8 animate-pulse-short">
           <div className={`inline-flex p-3 rounded-xl mb-4 ${
@@ -352,7 +358,7 @@ function Register() {
         </div>
 
         {/* Divider */}
-        <div className={`mt-8 pt-6 border-t ${isDark ? 'border-gray-700' : 'border-gray-200'} animate-fade-in-up`} style={{ animationDelay: '0.6s' }}>
+        <div className={`mt-8 pt-6 border-t ${isDark ? 'border-[#1e2942]/60' : 'border-gray-200'} animate-fade-in-up`} style={{ animationDelay: '0.6s' }}>
           <p className={`text-xs text-center ${
             isDark ? 'text-gray-400' : 'text-gray-400'
           } transition-colors duration-300`}>

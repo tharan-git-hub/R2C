@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { X, Code2, Tag, Globe, Lock, AlertCircle, Loader2, Copy, Check, Download } from 'lucide-react';
+import { X, Code2, Tag, Globe, Lock, AlertCircle, Loader2, Copy, Check, Download, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../Theme/ThemeContext.jsx';
@@ -23,7 +23,7 @@ function SnippetView() {
       setIsLoading(true);
       setError('');
       try {
-        const response = await axios.get(`https://r2c-2z91.onrender.com/api/snippets/${id}`, {
+        const response = await axios.get(`/api/snippets/${id}`, {
           headers: isAuthenticated ? { Authorization: `Bearer ${localStorage.getItem('token')}` } : {},
         });
         setSnippet(response.data);
@@ -120,8 +120,8 @@ function SnippetView() {
         ...vscDarkPlus,
         'pre[class*="language-"]': {
           ...vscDarkPlus['pre[class*="language-"]'],
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-          border: '1px solid #334155',
+background: 'linear-gradient(135deg, #060913 0%, #0f1626 100%)',
+           border: '1px solid #1e2942',
           borderRadius: '16px',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
         },
@@ -145,21 +145,26 @@ function SnippetView() {
   };
 
   const textPrimary = isDark ? 'text-white' : 'text-gray-800';
-  const textSecondary = isDark ? 'text-gray-400' : 'text-gray-600';
-  const cardBg = isDark ? 'bg-gray-800/50' : 'bg-white';
-  const cardBorder = isDark ? 'border-gray-700' : 'border-orange-100';
+  const textSecondary = isDark ? 'text-slate-400' : 'text-gray-600';
+  const cardBg = isDark ? 'bg-[#0f1626]/80' : 'bg-white';
+  const cardBorder = isDark ? 'border-[#1e2942]/60' : 'border-orange-100';
+
+  const bgClass = isDark
+    ? 'min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]'
+    : 'min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-br from-gray-50 via-orange-50 to-amber-100';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className={`relative ${cardBg} rounded-3xl p-6 sm:p-8 max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl border ${cardBorder} backdrop-blur-sm`}>
-        {/* Close Button */}
+    <div className={`${bgClass} transition-colors duration-500 animate-fade-in-up`}>
+      <div className={`relative ${cardBg} rounded-3xl p-6 sm:p-8 max-w-5xl w-full mx-4 shadow-2xl border ${cardBorder} backdrop-blur-sm animate-slide-in-up`}>
+        {/* Back Button */}
         <button
           onClick={handleClose}
-          className={`absolute top-4 right-4 p-2 rounded-full transition-all duration-300 z-10 ${
-            isDark ? 'text-gray-300 hover:text-orange-400 hover:bg-gray-800' : 'text-gray-600 hover:text-orange-500 hover:bg-gray-100'
+          className={`flex items-center space-x-2 mb-6 px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+            isDark ? 'text-slate-400 hover:text-white hover:bg-[#131b2e] border border-[#1e2942]/60' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-gray-300'
           }`}
         >
-          <X size={20} />
+          <ArrowLeft size={18} />
+          <span>Back</span>
         </button>
 
         {isLoading ? (
@@ -195,7 +200,7 @@ function SnippetView() {
               <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border w-fit ${
                 snippet.isPublic
                   ? isDark ? 'bg-green-900/30 text-green-400 border-green-600/30' : 'bg-green-100 text-green-800 border-green-200'
-                  : isDark ? 'bg-gray-900/30 text-gray-400 border-gray-600/30' : 'bg-gray-100 text-gray-700 border-gray-200'
+                  : isDark ? 'bg-[#131b2e]/50 text-slate-400 border-[#1e2942]/60' : 'bg-gray-100 text-gray-700 border-gray-200'
               } transition-colors duration-300`}>
                 {snippet.isPublic ? (
                   <>
@@ -213,7 +218,7 @@ function SnippetView() {
 
             {/* Description */}
             {snippet.description && (
-              <div className={`${isDark ? 'bg-gray-700/50' : 'bg-gray-50'} rounded-2xl p-6 mb-6`}>
+              <div className={`${isDark ? 'bg-[#131b2e]/50' : 'bg-gray-50'} rounded-2xl p-6 mb-6`}>
                 <h3 className={`text-lg font-semibold ${textPrimary} mb-3`}>Description</h3>
                 <p className={`${textSecondary} leading-relaxed`}>{snippet.description}</p>
               </div>
@@ -221,14 +226,14 @@ function SnippetView() {
 
             {/* Tags */}
             {snippet.tags.length > 0 && (
-              <div className={`${isDark ? 'bg-orange-900/20' : 'bg-orange-50'} rounded-2xl p-6 mb-6`}>
+              <div className={`${isDark ? 'bg-[#131b2e]/50' : 'bg-orange-50'} rounded-2xl p-6 mb-6`}>
                 <h3 className={`text-lg font-semibold ${textPrimary} mb-3`}>Tags</h3>
                 <div className="flex flex-wrap gap-2">
                   {snippet.tags.map((tag, index) => (
                     <span
                       key={index}
                       className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        isDark ? 'bg-orange-800/50 text-orange-300 border border-orange-700' : 'bg-orange-200 text-orange-800 border border-orange-300'
+                        isDark ? 'bg-[#1e2942]/60 text-orange-300 border border-[#1e2942]/60' : 'bg-orange-200 text-orange-800 border border-orange-300'
                       }`}
                     >
                       #{tag}
@@ -252,7 +257,7 @@ function SnippetView() {
                       copySuccess === 'Copied!' 
                         ? 'bg-green-500 text-white' 
                         : isDark 
-                          ? 'text-gray-300 hover:text-white hover:bg-gray-700 border border-gray-600' 
+                          ? 'text-slate-400 hover:text-white hover:bg-[#131b2e] border border-[#1e2942]/60' 
                           : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100 border border-gray-300'
                     }`}
                     aria-label={copySuccess === 'Copied!' ? 'Code copied' : 'Copy code'}
@@ -273,7 +278,7 @@ function SnippetView() {
                     onClick={() => downloadCode(snippet)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isDark 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-700 border border-gray-600'
+                        ? 'text-slate-400 hover:text-white hover:bg-[#131b2e] border border-[#1e2942]/60'
                         : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100 border border-gray-300'
                     }`}
                     aria-label="Download code"
@@ -299,8 +304,8 @@ function SnippetView() {
                     overflow: 'auto',
                     position: 'relative',
                     ...(isDark ? {
-                      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-                      border: '1px solid #334155',
+                      background: 'linear-gradient(135deg, #060913 0%, #0f1626 100%)',
+                      border: '1px solid #1e2942',
                       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
                     } : {
                       background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
@@ -325,7 +330,7 @@ function SnippetView() {
                 {/* Decorative gradient overlay */}
                 <div className={`absolute inset-0 rounded-16px pointer-events-none ${
                   isDark 
-                    ? 'bg-gradient-to-r from-slate-500/5 via-transparent to-blue-500/5'
+                    ? 'bg-gradient-to-r from-orange-500/5 via-transparent to-amber-500/5'
                     : 'bg-gradient-to-r from-slate-100/20 via-transparent to-blue-100/20'
                 }`} />
               </div>

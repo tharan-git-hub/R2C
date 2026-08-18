@@ -40,22 +40,22 @@ function Features() {
     }
   ];
 
-  const bgClass = isDark 
-    ? "min-h-screen transition-all duration-500 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800"
+  const bgClass = isDark
+    ? "min-h-screen transition-all duration-500 bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]"
     : "min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50";
 
 
   const textPrimary = isDark ? "text-white" : "text-gray-800";
-  const textSecondary = isDark ? "text-gray-300" : "text-gray-600";
-  const cardBg = isDark ? "bg-gray-900" : "bg-white";
-  const cardBorder = isDark ? "border-gray-700" : "border-orange-100";
+  const textSecondary = isDark ? "text-slate-400" : "text-gray-600";
+  const cardBg = isDark ? "bg-[#0f1626]/80 backdrop-blur-md" : "bg-white";
+  const cardBorder = isDark ? "border-[#1e2942]/60" : "border-orange-100";
 
   return (
     <div className={bgClass}>
 
 
       {/* Features Grid */}
-      <section className={`py-20 ${isDark ? 'bg-gray-900/50' : 'bg-white/50'} backdrop-blur-sm`}>
+      <section className={`py-20 ${isDark ? 'bg-[#0f1626]/50' : 'bg-white/50'} backdrop-blur-sm`}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className={`inline-flex items-center gap-2 ${isDark ? 'bg-orange-900/50 text-orange-300' : 'bg-orange-100 text-orange-700'} px-4 py-2 rounded-full text-sm font-medium mb-6`}>
@@ -96,9 +96,9 @@ function Features() {
       </section>
 
       {/* CTA Section */}
-      <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+      <section className={`py-20 ${isDark ? 'bg-[#060913]' : 'bg-white'}`}>
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className={`${isDark ? 'bg-gradient-to-r from-gray-800 to-gray-700 border-gray-600' : 'bg-gradient-to-r from-orange-50 to-amber-50 border-orange-100'} rounded-3xl p-12 border relative overflow-hidden`}>
+          <div className={`${isDark ? 'bg-gradient-to-r from-[#0f1626] to-[#131b2e] border-[#1e2942]/60' : 'bg-gradient-to-r from-orange-50 to-amber-50 border-orange-100'} rounded-3xl p-12 border relative overflow-hidden`}>
             <div className="absolute top-4 left-4 text-3xl text-orange-300 opacity-30 font-mono animate-pulse">{"=>"}</div>
             <div className="absolute bottom-4 right-4 text-2xl text-amber-300 opacity-30 font-mono animate-bounce">{"( )"}</div>
             
@@ -124,7 +124,7 @@ function Features() {
               </Link>
               <Link
                 to="/collection"
-                className={`${isDark ? 'text-orange-400 hover:bg-orange-900/20' : 'text-orange-600 hover:bg-orange-50'} px-8 py-4 rounded-full font-semibold text-lg transition-colors`}
+                className={`${cardBg} ${textPrimary} ${cardBorder} px-8 py-4 rounded-full font-semibold text-lg transition-colors hover:border-orange-500 hover:shadow-lg`}
               >
                 View Snippets
               </Link>

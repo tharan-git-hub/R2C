@@ -10,14 +10,15 @@ function Home() {
 
   
 
-  const bgClass = isDark 
-    ? "min-h-screen transition-all duration-500 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800"
+  const bgClass = isDark
+    ? "min-h-screen transition-all duration-500 bg-gradient-to-br from-[#060913] via-[#0b101f] to-[#121a2e]"
     : "min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50";
 
 
   const textPrimary = isDark ? "text-white" : "text-gray-800";
-  const textSecondary = isDark ? "text-gray-300" : "text-gray-600";
-  const cardBg = isDark ? "bg-gray-900" : "bg-white";
+  const textSecondary = isDark ? "text-slate-400" : "text-gray-600";
+  const cardBg = isDark ? "bg-[#0f1626]/80 backdrop-blur-md" : "bg-white";
+  const cardBorder = isDark ? "border-[#1e2942]/60" : "border-orange-100";
 
   return (
     <div className={bgClass}>
@@ -55,7 +56,7 @@ function Home() {
                 Get Started
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <button className={`${cardBg} ${textPrimary} px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 ${isDark ? 'border-orange-700 hover:border-orange-500' : 'border-orange-200 hover:border-orange-300'}`}>
+              <button className={`${cardBg} ${textPrimary} ${cardBorder} px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 ${isDark ? 'hover:border-orange-500' : 'hover:border-orange-300'}`}>
                 <Link to="/features">Learn More</Link>
               </button>
             </div>
@@ -64,7 +65,7 @@ function Home() {
       </header>
 
       {/* Why Section */}
-      <section className={`py-20 ${isDark ? 'bg-gray-900/50' : 'bg-white/50'} backdrop-blur-sm`}>
+      <section className={`py-20 ${isDark ? 'bg-[#0f1626]/50' : 'bg-white/50'} backdrop-blur-sm`}>
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className={`inline-flex items-center gap-2 ${isDark ? 'bg-orange-900/50 text-orange-300' : 'bg-orange-100 text-orange-700'} px-4 py-2 rounded-full text-sm font-medium mb-6`}>
             <Sparkles className="w-4 h-4" />
@@ -86,9 +87,9 @@ function Home() {
          
 
       {/* CTA Section */}
-      <section className={`py-20 ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+      <section className={`py-20 ${isDark ? 'bg-[#060913]' : 'bg-white'}`}>
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className={`${isDark ? 'bg-gradient-to-r from-gray-800 to-gray-700 border-gray-600' : 'bg-gradient-to-r from-orange-50 to-amber-50 border-orange-100'} rounded-3xl p-12 border relative overflow-hidden`}>
+          <div className={`${isDark ? 'bg-gradient-to-r from-[#0f1626] to-[#131b2e] border-[#1e2942]/60' : 'bg-gradient-to-r from-orange-50 to-amber-50 border-orange-100'} rounded-3xl p-12 border relative overflow-hidden`}>
             <div className="absolute top-4 left-4 text-3xl text-orange-300 opacity-30 font-mono animate-pulse">{"=>"}</div>
             <div className="absolute bottom-4 right-4 text-2xl text-amber-300 opacity-30 font-mono animate-bounce">{"( )"}</div>
             
@@ -112,7 +113,7 @@ function Home() {
                 Get Started
                 <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
               </Link>
-              <button className={`${cardBg} ${textPrimary} px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 ${isDark ? 'border-orange-700 hover:border-orange-500' : 'border-orange-200 hover:border-orange-300'}`}>
+              <button className={`${cardBg} ${textPrimary} ${cardBorder} px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 ${isDark ? 'hover:border-orange-500' : 'hover:border-orange-300'}`}>
                 <Link to="/collection">Collection</Link>
               </button>
             </div>
@@ -121,7 +122,7 @@ function Home() {
       </section>
 
       {/* Footer */}
-      <footer className={`py-3 ${isDark ? 'bg-black border-gray-700' : 'bg-orange-50 border-orange-200'} border-t`}>
+      <footer className={`py-3 ${isDark ? 'bg-[#060913] border-[#1e2942]/60' : 'bg-orange-50 border-orange-200'} border-t`}>
         <div className="max-w-6xl mx-auto px-6 text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-orange-400 to-amber-500 rounded-full mb-4">
             <Code className="w-6 h-6 text-white" />

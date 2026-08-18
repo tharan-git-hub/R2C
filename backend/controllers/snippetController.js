@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Snippet = require('../models/Snippet');
 
 const createSnippet = async (req, res) => {
@@ -52,6 +53,9 @@ const getMySnippets = async (req, res) => {
 
 const getSnippetById = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid snippet ID format' });
+    }
     const snippet = await Snippet.findById(req.params.id);
     if (!snippet || (snippet.userId.toString() !== req.user?.id && !snippet.isPublic)) {
       return res.status(404).json({ message: 'Snippet not found or unauthorized' });
@@ -65,6 +69,10 @@ const getSnippetById = async (req, res) => {
 
 const updateSnippet = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid snippet ID format' });
+    }
+
     const { title, code, language, tags, description, isPublic } = req.body;
 
     // Manual validation
@@ -91,7 +99,15 @@ const updateSnippet = async (req, res) => {
     if (!snippet || snippet.userId.toString() !== req.user.id) {
       return res.status(404).json({ message: 'Snippet not found or unauthorized' });
     }
-    Object.assign(snippet, req.body);
+
+    // Explicitly update only allowed fields to prevent injection (like changing userId)
+    if (title !== undefined) snippet.title = title;
+    if (code !== undefined) snippet.code = code;
+    if (language !== undefined) snippet.language = language;
+    if (tags !== undefined) snippet.tags = tags;
+    if (description !== undefined) snippet.description = description;
+    if (isPublic !== undefined) snippet.isPublic = isPublic;
+
     await snippet.save();
     res.json(snippet);
   } catch (error) {
@@ -102,6 +118,9 @@ const updateSnippet = async (req, res) => {
 
 const deleteSnippet = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid snippet ID format' });
+    }
     const snippet = await Snippet.findById(req.params.id);
     if (!snippet || snippet.userId.toString() !== req.user.id) {
       return res.status(404).json({ message: 'Snippet not found or unauthorized' });
