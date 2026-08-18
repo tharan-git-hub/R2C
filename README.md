@@ -10,7 +10,7 @@ Built with **React + Vite** on the front‑end and **Node.js / Express + MongoDB
 |-------|--------------|
 | Front‑end | React 19, Vite, TailwindCSS 4, React Router 7, Axios, Lucide‑React, react‑syntax‑highlighter |
 | Back‑end | Express 5, Mongoose 8, JWT authentication, bcrypt / bcryptjs, express‑validator, express‑rate‑limit, cors |
-| Database | MongoDB (WiredTiger) |
+| Database | MongoDB
 | Dev Tools | Nodemon, ESLint, dotenv |
 
 ---
