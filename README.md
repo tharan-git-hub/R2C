@@ -111,6 +111,12 @@ The front‑end proxies `/api` requests to the back‑end (configured in `vite.c
 
 ## API Endpoints (prefixed with `/api`)
 
+### Health Check
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/health` | Service health status (no auth) |
+| GET | `/api/health` | Service health status under API prefix (no auth) |
+
 ### Auth
 | Method | Path | Description |
 |--------|------|-------------|
