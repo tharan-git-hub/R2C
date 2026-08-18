@@ -1,4 +1,6 @@
 # R2C – Code Snippet Manager
+## Live Link 
+https://r2c-th.vercel.app/
 
 A full‑stack web application for storing, searching and sharing code snippets.  
 Built with **React + Vite** on the front‑end and **Node.js / Express + MongoDB** on the back‑end.
